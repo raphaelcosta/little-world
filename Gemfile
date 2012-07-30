@@ -7,6 +7,9 @@ gem 'rails', '3.2.3'
 
 gem 'mongoid', '~> 3.0.2'
 gem 'simple_form', '~> 2.0.2'
+gem 'geocoder', :github => 'alexreisner/geocoder'
+
+
 
 
 

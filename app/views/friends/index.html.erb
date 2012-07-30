@@ -25,6 +25,9 @@
                       :method => :delete,
                       :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
                       :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'View near friends',
+                      friend_path(friend),
+                      :class => 'btn btn-mini btn-info' %>                      
         </td>
       </tr>
     <% end %>

@@ -1,10 +1,13 @@
 class Friend
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :name, type: String
-  field :location, type: Array
 
+  field :name, type: String
+
+  field :location, type: Array
   index({ location: "2d" })
+
+
   attr_writer :latitude,:longitude
 
   validates :name ,:presence => true, :uniqueness => true
@@ -25,8 +28,12 @@ class Friend
   def near_friends(options = {})
     options[:limit] = 3
     friends = Friend.near(location: self.location).where(:_id.nin => [self.id])
-    friends = friends.max_distance(location: (options[:kms] / 111.12)) if options[:kms]
+    friends = friends.max_distance(location: (options[:kms] / 111.12)) if options[:kms].present?
     friends.limit(options[:limit])
+  end
+
+  def distance_to_friend(friend)
+    Geocoder::Calculations.distance_between(self.location, friend.location) * 1.6
   end
 
   private
@@ -52,5 +59,6 @@ class Friend
       errors.add :longitude , "is already taken" 
     end
   end
+
 
 end
